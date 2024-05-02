@@ -43,18 +43,18 @@ const form = reactive({
 });
 
 interface UserObject {
-    "ok": boolean,
-    "token": string,
-    "user": {
-        "id": string,
-        "firstName": string,
-        "lastName": string,
-        "name": string,
-        "email": string,
-        "mobile": string,
-        "active": boolean,
-        "branchTag": string
-    }
+    ok: boolean;
+    token: string;
+    user: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        name: string;
+        email: string;
+        mobile: string;
+        active: boolean;
+        branchTag: string;
+    };
 }
 
 const login = async () => {
@@ -69,11 +69,11 @@ const login = async () => {
         isLoading.value = false;
 
         if (data.value?.user?.id) {
-            localStorage.setItem("eg_user_v5", JSON.stringify(data.value.user));
+            localStorage.setItem("egv5_user_object", JSON.stringify(data.value.user));
+            localStorage.setItem("egv5_user_token", JSON.stringify(data.value.token));
 
             const redirectUrl: string = (route.query.redirect as string) || "/";
             await router.push(decodeURIComponent(redirectUrl));
-
         } else {
             console.error(error.value?.data.message);
         }
