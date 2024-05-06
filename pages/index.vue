@@ -31,8 +31,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { User } from "@/types/app.types";
-
 const router = useRouter();
 const route = useRoute();
 
@@ -66,11 +64,20 @@ const login = async () => {
             body: JSON.stringify(form),
         });
 
+        const userTokenCookie = useCookie("user", {
+            path: "/",
+            maxAge: 60 * 60 * 24 * 7,
+            secure: true,
+            sameSite: "lax",
+        });
+
         isLoading.value = false;
 
         if (data.value?.user?.id) {
             localStorage.setItem("egv5_user_object", JSON.stringify(data.value.user));
             localStorage.setItem("egv5_user_token", JSON.stringify(data.value.token));
+
+            userTokenCookie.value = JSON.stringify(data.value);
 
             const redirectUrl: string = (route.query.redirect as string) || "/";
             await router.push(decodeURIComponent(redirectUrl));
