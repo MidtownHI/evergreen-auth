@@ -72,7 +72,7 @@ const login = async () => {
             const userTokenCookie = useCookie("evergreen_u", {
                 path: '/',
                 maxAge: 60 * 60 * 24, // 24 hours
-                ...(inProduction.value && { domain: '.evergreenmhi.net' }),
+                // ...(inProduction.value && { domain: '.evergreenmhi.net' }),
                 ...(inProduction.value && { secure: true }),
                 sameSite: 'lax'
             });
