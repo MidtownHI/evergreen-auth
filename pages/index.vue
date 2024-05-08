@@ -72,7 +72,7 @@ const login = async () => {
             const userTokenCookie = useCookie("evergreen_u", {
                 path: '/',
                 maxAge: 60 * 60 * 24, // 24 hours
-                // ...(inProduction.value && { domain: '.evergreenmhi.net' }),
+                ...(inProduction.value && { domain: '.evergreenmhi.com' }),
                 ...(inProduction.value && { secure: true }),
                 sameSite: 'lax'
             });
@@ -82,7 +82,7 @@ const login = async () => {
             const redirectUrl: string = (route.query.redirect as string) || '/';
             await router.push(decodeURIComponent(redirectUrl));
         } else {
-            console.error(error.value?.data.message);
+            console.error(error.value?.message);
         }
     } catch (err) {
         isLoading.value = false;
