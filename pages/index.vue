@@ -7,7 +7,6 @@
                 </svg>
                 <div class="text-[2.5em] text-white">Evergreen</div>
             </div>
-            <!--            <h2 class="text-center text-3xl font-medium tracking-tight text-white mt-3">Sign in to your account</h2>-->
 
             <div class="mt-3 sm:mx-auto sm:w-full sm:max-w-md">
                 <div class="mb-16 bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
@@ -31,14 +30,13 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter, useRoute } from 'vue-router';
+import { ref, reactive } from 'vue';
+
 const router = useRouter();
 const route = useRoute();
-
 const isLoading = ref(false);
-const form = reactive({
-    username: "",
-    password: "",
-});
+const form = reactive({ username: '', password: '' });
 
 interface UserObject {
     ok: boolean;
@@ -64,22 +62,24 @@ const login = async () => {
             body: JSON.stringify(form),
         });
 
-        const userTokenCookie = useCookie("user", {
-            path: "/",
-            maxAge: 60 * 60 * 24 * 7,
-            secure: true,
-            sameSite: "lax",
-        });
-
         isLoading.value = false;
 
-        if (data.value?.user?.id) {
-            localStorage.setItem("egv5_user_object", JSON.stringify(data.value.user));
-            localStorage.setItem("egv5_user_token", JSON.stringify(data.value.token));
+        const inProduction = computed(() => {
+            return process.env.NODE_ENV === 'production'
+        })
 
-            userTokenCookie.value = JSON.stringify(data.value);
+        if (data.value?.ok) {
+            const userTokenCookie = useCookie("evergreen_u", {
+                path: '/',
+                maxAge: 60 * 60 * 24, // 24 hours
+                ...(inProduction.value && { domain: '.evergreenmhi.net' }),
+                ...(inProduction.value && { secure: true }),
+                sameSite: 'lax'
+            });
 
-            const redirectUrl: string = (route.query.redirect as string) || "/";
+            userTokenCookie.value = JSON.stringify({ token: data.value.token, user: data.value.user });
+
+            const redirectUrl: string = (route.query.redirect as string) || '/';
             await router.push(decodeURIComponent(redirectUrl));
         } else {
             console.error(error.value?.data.message);
