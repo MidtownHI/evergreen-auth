@@ -80,7 +80,25 @@ const login = async () => {
             userTokenCookie.value = JSON.stringify({ token: data.value.token, user: data.value.user });
 
             const redirectUrl: string = (route.query.redirect as string) || 'https://five.evergreenmhi.com';
-            await router.push(decodeURIComponent(redirectUrl));
+
+            // Check if the URL is external
+            const isExternal = (url: string) => {
+                try {
+                    const u = new URL(url);
+                    return u.origin !== window.location.origin;
+                } catch {
+                    // If URL isn't valid return false
+                    return false;
+                }
+            }
+
+            if (isExternal(redirectUrl)) {
+                // If the URL is external, set window.location.href
+                window.location.href = decodeURIComponent(redirectUrl);
+            } else {
+                // Otherwise, use router.push for internal navigation
+                await router.replace(decodeURIComponent(redirectUrl));
+            }
         } else {
             console.error(error.value?.message);
         }
