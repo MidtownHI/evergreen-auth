@@ -79,7 +79,7 @@ const login = async () => {
 
             userTokenCookie.value = JSON.stringify({ token: data.value.token, user: data.value.user });
 
-            const redirectUrl: string = (route.query.redirect as string) || '/';
+            const redirectUrl: string = (route.query.redirect as string) || 'https://five.evergreenmhi.com';
             await router.push(decodeURIComponent(redirectUrl));
         } else {
             console.error(error.value?.message);
