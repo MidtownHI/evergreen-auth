@@ -83,21 +83,9 @@ async function login() {
     const split: string[] = redirectUrl.split(':');
     const exists: boolean = split[0] in apps;
 
-
-    // Check if the URL is external
-    const isExternal = (url: string) => {
-        try {
-            const u = new URL(url);
-            return u.hostname !== window.location.hostname;
-        } catch {
-            // If URL isn't valid return false
-            return false;
-        }
-    };
-
     if (exists) {
         const new_url = `${apps[split[0]]}${split[1]}`;
-        window.location.replace(encodeURIComponent(redirectUrl));
+        window.location.replace(encodeURIComponent(new_url));
     }
 }
 </script>
