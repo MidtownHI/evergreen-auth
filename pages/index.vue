@@ -72,9 +72,17 @@ async function login() {
         sameSite: "lax",
     });
 
+    const apps: { [key: string]: string } = {
+        inbox: 'https://inbox.evergreenmhi.com',
+        five: 'https://five.evergreenmhi.com'
+    }
+
     userTokenCookie.value = JSON.stringify({ token: resp.token, user: resp.user });
 
-    const redirectUrl: string = (route.query.redirect as string) || "https://five.evergreenmhi.com";
+    const redirectUrl: string = (route.query.redirect as string);
+    const split: string[] = redirectUrl.split(':');
+    const exists: boolean = split[0] in apps;
+
 
     // Check if the URL is external
     const isExternal = (url: string) => {
@@ -87,12 +95,9 @@ async function login() {
         }
     };
 
-    if (isExternal(redirectUrl)) {
-        // If the URL is external, set window.location.href
-        window.location.replace(decodeURIComponent(redirectUrl));
-    } else {
-        // Otherwise, use router.push for internal navigation
-        await router.replace(decodeURIComponent(redirectUrl));
+    if (exists) {
+        const new_url = `${apps[split[0]]}${split[1]}`;
+        window.location.replace(encodeURIComponent(redirectUrl));
     }
 }
 </script>
