@@ -1,34 +1,44 @@
 <template>
-    <div class="bg-slate-900">
-        <div class="container mx-auto flex min-h-[100vh] flex-col justify-center p-6">
-            <div class="mx-auto flex flex-row items-center gap-3">
-                <svg class="h-12 w-12 fill-green-600" viewBox="0 0 24 24">
+    <div class="grid grid-cols-1 md:grid-cols-6 min-h-screen">
+        <div class="relative md:col-span-4">
+            <NuxtImg
+                src="/eg.jpg"
+                alt="Background Image"
+                layout="fill"
+                objectFit="cover"
+                class="absolute inset-0 w-full h-full"
+            />
+        </div>
+
+        <div class="col-span-2 p-6 my-auto">
+
+            <div class="flex flex-row items-center">
+                <svg class="h-24 w-24 fill-green-600 m-0 p-0" viewBox="0 0 24 24">
                     <path d="M10,21V18H3L8,13H5L10,8H7L12,3L17,8H14L19,13H16L21,18H14V21H10Z" />
                 </svg>
-                <div class="text-[2.5em] text-white">Evergreen</div>
-            </div>
-
-            <div class="mt-3 sm:mx-auto sm:w-full sm:max-w-md">
-                <div class="mb-16 bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block font-medium text-gray-700" for="username"> Username </label>
-                            <ui-input block v-model="form.username" data-test="username"
-                                      placeholder="First Initial + Last Name" type="text" />
-                        </div>
-
-                        <div>
-                            <label class="block font-medium text-gray-700" for="password"> Password </label>
-                            <ui-input block @keyup.enter="login" v-model="form.password" data-test="password"
-                                      placeholder="Your Password" type="password" />
-                        </div>
-
-                        <ui-button :loading="isLoading" block testing="login" secondary type="success" @click="login">
-                            Sign In
-                        </ui-button>
-                    </div>
+                <div class="text-6xl text-white mt-3.5">
+                    Evergreen
                 </div>
             </div>
+
+
+
+                <u-card>
+                    <div class="space-y-6">
+                            <u-form-group label="Username">
+                            <u-input aria-autocomplete="none" size="xl" block v-model="form.username" data-test="username" placeholder="First Initial + Last Name" type="text" />
+                            </u-form-group>
+
+                            <u-form-group label="Password">
+                                <u-input aria-autocomplete="none" size="xl" block @keyup.enter="login" v-model="form.password" data-test="password" placeholder="Your Password" type="password" />
+                            </u-form-group>
+
+                        <u-button :loading="isLoading" block testing="login" secondary type="success" @click="login">
+                            Sign In
+                        </u-button>
+                    </div>
+                </u-card>
+
         </div>
     </div>
 </template>
