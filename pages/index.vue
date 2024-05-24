@@ -85,7 +85,7 @@ async function login() {
 
     if (exists) {
         const new_url = `${apps[split[0]]}${split[1]}`;
-        window.location.replace(encodeURIComponent(new_url));
+        window.location.href = encodeURIComponent(new_url);
     }
 }
 </script>
