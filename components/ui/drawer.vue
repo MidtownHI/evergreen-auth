@@ -1,7 +1,7 @@
 <template>
     <div
-        :class="`fixed top-0 h-full z-50 shadow-lg ${drawerSide === 'left' ? 'left-0' : 'right-0'} transform ${isOpen ? (drawerSide === 'left' ? '-translate-x-0' : 'translate-x-0') : drawerSide === 'left' ? '-translate-x-full' : 'translate-x-full'}`"
-        class="bg-white w-64 transition-transform duration-300 text-gray-700"
+        :class="`fixed top-0 z-50 h-full shadow-lg ${drawerSide === 'left' ? 'left-0' : 'right-0'} transform ${isOpen ? (drawerSide === 'left' ? '-translate-x-0' : 'translate-x-0') : drawerSide === 'left' ? '-translate-x-full' : 'translate-x-full'}`"
+        class="w-64 bg-white text-gray-700 transition-transform duration-300"
     >
         <button @click="toggleDrawer" class="p-4">Close</button>
         This is some drawer content.

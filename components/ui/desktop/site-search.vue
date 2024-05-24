@@ -1,3 +1,3 @@
 <template>
-  <input class="bg-transparent border-none p-1 h-full w-72 focus:border-none focus:outline-none" placeholder="Search..." />
+    <input class="h-full w-72 border-none bg-transparent p-1 focus:border-none focus:outline-none" placeholder="Search..." />
 </template>
