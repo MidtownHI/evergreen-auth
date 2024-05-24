@@ -99,7 +99,7 @@ const login = async () => {
             const isExternal = (url: string) => {
                 try {
                     const u = new URL(url);
-                    return u.origin !== window.location.origin;
+                    return u.hostname !== window.location.hostname;
                 } catch {
                     // If URL isn't valid return false
                     return false;
