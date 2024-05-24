@@ -13,15 +13,19 @@
                     <div class="space-y-6">
                         <div>
                             <label class="block font-medium text-gray-700" for="username"> Username </label>
-                            <ui-input block v-model="form.username" data-test="username" placeholder="First Initial + Last Name" type="text" />
+                            <ui-input block v-model="form.username" data-test="username"
+                                      placeholder="First Initial + Last Name" type="text" />
                         </div>
 
                         <div>
                             <label class="block font-medium text-gray-700" for="password"> Password </label>
-                            <ui-input block @keyup.enter="login" v-model="form.password" data-test="password" placeholder="Your Password" type="password" />
+                            <ui-input block @keyup.enter="login" v-model="form.password" data-test="password"
+                                      placeholder="Your Password" type="password" />
                         </div>
 
-                        <ui-button :loading="isLoading" block testing="login" secondary type="success" @click="login"> Sign In </ui-button>
+                        <ui-button :loading="isLoading" block testing="login" secondary type="success" @click="login">
+                            Sign In
+                        </ui-button>
                     </div>
                 </div>
             </div>
@@ -30,13 +34,13 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter, useRoute } from 'vue-router';
-import { ref, reactive } from 'vue';
+import { useRouter, useRoute } from "vue-router";
+import { ref, reactive } from "vue";
 
 const router = useRouter();
 const route = useRoute();
 const isLoading = ref(false);
-const form = reactive({ username: '', password: '' });
+const form = reactive({ username: "", password: "" });
 
 interface UserObject {
     ok: boolean;
@@ -59,27 +63,27 @@ const login = async () => {
     try {
         const { data, error } = await useFetch<UserObject>(`https://users.evergreenmhi.net/auth/login`, {
             method: "POST",
-            body: JSON.stringify(form),
+            body: JSON.stringify(form)
         });
 
         isLoading.value = false;
 
         const inProduction = computed(() => {
-            return process.env.NODE_ENV === 'production'
-        })
+            return process.env.NODE_ENV === "production";
+        });
 
         if (data.value?.ok) {
             const userTokenCookie = useCookie("evergreen_u", {
-                path: '/',
+                path: "/",
                 maxAge: 60 * 60 * 24, // 24 hours
-                ...(inProduction.value && { domain: '.evergreenmhi.com' }),
+                ...(inProduction.value && { domain: ".evergreenmhi.com" }),
                 ...(inProduction.value && { secure: true }),
-                sameSite: 'lax'
+                sameSite: "lax"
             });
 
             userTokenCookie.value = JSON.stringify({ token: data.value.token, user: data.value.user });
 
-            const redirectUrl: string = (route.query.redirect as string) || 'https://five.evergreenmhi.com';
+            const redirectUrl: string = (route.query.redirect as string) || "https://five.evergreenmhi.com";
 
             // Check if the URL is external
             const isExternal = (url: string) => {
@@ -90,11 +94,11 @@ const login = async () => {
                     // If URL isn't valid return false
                     return false;
                 }
-            }
+            };
 
             if (isExternal(redirectUrl)) {
                 // If the URL is external, set window.location.href
-                window.location.href = decodeURIComponent(redirectUrl);
+                window.location.replace(decodeURIComponent(redirectUrl));
             } else {
                 // Otherwise, use router.push for internal navigation
                 await router.replace(decodeURIComponent(redirectUrl));
