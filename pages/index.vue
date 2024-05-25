@@ -80,12 +80,9 @@ async function login() {
     userTokenCookie.value = JSON.stringify({ token: resp.token, user: resp.user });
 
     const redirectUrl: string = (route.query.redirect as string);
-    const split: string[] = redirectUrl.split(':');
-    const exists: boolean = split[0] in apps;
 
-    if (exists) {
-        const new_url = `${apps[split[0]]}${split[1]}`;
-        window.location.href = encodeURIComponent(new_url);
+    if (redirectUrl in apps) {
+        window.location.href = encodeURIComponent(apps[redirectUrl]);
     }
 }
 </script>
