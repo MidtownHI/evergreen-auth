@@ -82,7 +82,7 @@ async function login() {
     const redirectUrl: string = (route.query.redirect as string);
 
     if (redirectUrl in apps) {
-        window.location.href = encodeURIComponent(apps[redirectUrl]);
+        window.location.href = apps[redirectUrl];
     }
 }
 </script>
