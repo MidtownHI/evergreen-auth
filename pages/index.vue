@@ -74,7 +74,8 @@ async function login() {
 
     const apps: { [key: string]: string } = {
         inbox: 'https://inbox.evergreenmhi.com',
-        five: 'https://five.evergreenmhi.com'
+        five: 'https://five.evergreenmhi.com',
+        reporting: 'https://reporting.evergreenmhi.com'
     }
 
     userTokenCookie.value = JSON.stringify({ token: resp.token, user: resp.user });
