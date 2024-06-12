@@ -58,13 +58,6 @@ async function login() {
         body: JSON.stringify(form),
     });
 
-    const old_resp = await $fetch("https://api.evergreenmhi.com/v1/auth/login", {
-        method: "POST",
-        body: JSON.stringify(form),
-    });
-
-    localStorage.setItem("eg_user", JSON.stringify(old_resp));
-
     isLoading.value = false;
 
     const inProduction = computed(() => {
@@ -83,6 +76,7 @@ async function login() {
         inbox: "https://inbox.evergreenmhi.com",
         five: "https://five.evergreenmhi.com",
         reporting: "https://reporting.evergreenmhi.com",
+        dev: "https://dev.evergreenmhi.com",
     };
 
     userTokenCookie.value = JSON.stringify({ token: resp.token, user: resp.user });
@@ -91,6 +85,8 @@ async function login() {
 
     if (redirectUrl in apps) {
         window.location.href = apps[redirectUrl];
+    } else {
+        window.location.href = "https://evergreenmhi.com/";
     }
 }
 </script>
