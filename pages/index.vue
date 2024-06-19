@@ -77,6 +77,7 @@ async function login() {
         five: "https://five.evergreenmhi.com",
         reporting: "https://reporting.evergreenmhi.com",
         dev: "https://dev.evergreenmhi.com",
+        next: "https://next.evergreenmhi.com",
     };
 
     userTokenCookie.value = JSON.stringify({ token: resp.token, user: resp.user });
