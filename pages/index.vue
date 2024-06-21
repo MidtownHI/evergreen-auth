@@ -75,7 +75,7 @@ async function login() {
     const apps: { [key: string]: string } = {
         inbox: "https://inbox.evergreenmhi.com",
         five: "https://five.evergreenmhi.com",
-        reporting: "https://reporting.evergreenmhi.com",
+        cmo: "https://cmo.evergreenmhi.com",
         dev: "https://dev.evergreenmhi.com",
         next: "https://next.evergreenmhi.com",
     };
