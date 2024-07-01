@@ -34,6 +34,7 @@ const router = useRouter();
 const route = useRoute();
 const isLoading = ref(false);
 const form = reactive({ username: "", password: "" });
+const toast = useToast();
 
 interface UserObject {
     ok: boolean;
@@ -50,6 +51,11 @@ interface UserObject {
     };
 }
 
+interface BadResponse {
+    ok: boolean;
+    msg: string;
+}
+
 async function login() {
     isLoading.value = true;
 
@@ -57,6 +63,20 @@ async function login() {
         method: "POST",
         body: JSON.stringify(form),
     });
+
+    console.log('response', resp);
+
+    if (!resp.ok) {
+        toast.add({
+            title: 'Error Logging In',
+            description: (resp as unknown as BadResponse).msg,
+            color: 'red'
+        })
+
+        isLoading.value = false;
+
+        return;
+    }
 
     isLoading.value = false;
 
